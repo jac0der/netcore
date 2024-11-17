@@ -14,8 +14,14 @@ namespace dotnet_rpg.Controllers
         private static List<Character> characters = new List<Character>{
             new Character(),
             new Character{
+                Id = 1,
                 Name = "Sam",
                 HitPoints = 150
+                },
+            new Character{
+                Id = 2,
+                Name = "Todi",
+                HitPoints = 400
                 }
         };
 
@@ -26,7 +32,7 @@ namespace dotnet_rpg.Controllers
         }
 
         [HttpGet]
-        [Route("GetallCharacters")]
+        [Route("getall")]
         public ActionResult<List<Character>> GetAll()
         {
             return Ok(characters);
@@ -35,7 +41,14 @@ namespace dotnet_rpg.Controllers
         [HttpGet("getfirst")]
         public ActionResult<Character> GetFirstCharacter()
         {
-            return characters[0];
+            return Ok(characters[0]);
+        }
+
+        [HttpGet]
+        [Route("getsingle/{id}")]
+        public ActionResult<Character> GetSingle(int id)
+        {
+            return Ok(characters.FirstOrDefault(c => c.Id == id));
         }
     }
 }
