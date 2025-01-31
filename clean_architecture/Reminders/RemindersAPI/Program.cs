@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=reminders.db"));
+    options.UseSqlite("Data Source=../Infrastructure/reminders.db"));
 
 builder.Services.AddScoped<IReminderRepository, ReminderRepository>();
 builder.Services.AddScoped<CreateReminderUseCase>();
