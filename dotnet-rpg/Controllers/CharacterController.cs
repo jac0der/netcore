@@ -19,35 +19,35 @@ namespace dotnet_rpg.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Character> Get()
+        public async Task<ActionResult<Character>> Get()
         {
-            return Ok(_characterService.GetDefaultCharacter());
+            return Ok(await _characterService.GetDefaultCharacter());
         }
 
         [HttpGet]
         [Route("getall")]
-        public ActionResult<List<Character>> GetAll()
+        public async Task<ActionResult<List<Character>>> GetAll()
         {
-            return Ok(_characterService.GetAllCharacters());
+            return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("getfirst")]
-        public ActionResult<Character> GetFirstCharacter()
+        public async Task<ActionResult<Character>> GetFirstCharacter()
         {
-            return Ok(_characterService.GetFirstCharacter());
+            return Ok(await _characterService.GetFirstCharacter());
         }
 
         [HttpGet]
         [Route("getsingle/{id}")]
-        public ActionResult<Character> GetSingle(int id)
+        public async Task<ActionResult<Character>> GetSingle(int id)
         {
-            return Ok(_characterService.GetCharacterById(id));
+            return Ok(await _characterService.GetCharacterById(id));
         }
 
         [HttpPost]
-        public ActionResult<List<Character>> AddCharacter([FromBody]Character newCharacter)
+        public async Task<ActionResult<List<Character>>> AddCharacter([FromBody]Character newCharacter)
         {
-            return Ok(_characterService.AddCharacter(newCharacter));
+            return Ok(await _characterService.AddCharacter(newCharacter));
         }
     }
 }
