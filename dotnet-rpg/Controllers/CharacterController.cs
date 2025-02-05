@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dotnet_rpg.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_rpg.Controllers
@@ -10,52 +11,43 @@ namespace dotnet_rpg.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private static Character knigth = new Character();
-        private static List<Character> characters = new List<Character>{
-            new Character(),
-            new Character{
-                Id = 1,
-                Name = "Sam",
-                HitPoints = 150
-                },
-            new Character{
-                Id = 2,
-                Name = "Todi",
-                HitPoints = 400
-                }
-        };
+        private readonly ICharacterService _characterService;
+        public CharacterController(ICharacterService characterService)
+        {
+            this._characterService = characterService;
+            
+        }
 
         [HttpGet]
         public ActionResult<Character> Get()
         {
-            return Ok(knigth);
+            return Ok(_characterService.GetDefaultCharacter());
         }
 
         [HttpGet]
         [Route("getall")]
         public ActionResult<List<Character>> GetAll()
         {
-            return Ok(characters);
+            return Ok(_characterService.GetAllCharacters());
         }
 
         [HttpGet("getfirst")]
         public ActionResult<Character> GetFirstCharacter()
         {
-            return Ok(characters[0]);
+            return Ok(_characterService.GetFirstCharacter());
         }
 
         [HttpGet]
         [Route("getsingle/{id}")]
         public ActionResult<Character> GetSingle(int id)
         {
-            return Ok(characters.FirstOrDefault(c => c.Id == id));
+            return Ok(_characterService.GetCharacterById(id));
         }
 
         [HttpPost]
         public ActionResult<List<Character>> AddCharacter([FromBody]Character newCharacter)
         {
-            characters.Add(newCharacter);
-            return Ok(characters);
+            return Ok(_characterService.AddCharacter(newCharacter));
         }
     }
 }
